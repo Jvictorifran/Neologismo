@@ -1,7 +1,7 @@
 # --- Python / Django ---
 backend/venv/
 backend/__pycache__/
-backend/*.sqlite3  (Opcional, se quiserem ignorar o banco local)
+backend/*.sqlite3  (
 *.pyc
 
 # --- Node / React ---
