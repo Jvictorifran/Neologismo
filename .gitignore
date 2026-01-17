@@ -1,0 +1,11 @@
+# --- Python / Django ---
+backend/venv/
+backend/__pycache__/
+backend/*.sqlite3  (Opcional, se quiserem ignorar o banco local)
+*.pyc
+
+# --- Node / React ---
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+.env
