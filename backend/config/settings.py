@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     #apps instalados
     'neologismo',
+    'accounts',
 ]
 
 MIDDLEWARE = [

@@ -12,8 +12,8 @@ class Neologismo (models.Model):
     aprovado = models.BooleanField(default=False)
 
     #sobre o usuario/autor
-    data_criacao = models.DateTimeField(auto_now_add=True)
-    autor = models.CharField(max_length=100, blank=True, null=True)
+    data_criacao = models.DateTimeField(auto_now_add=True, default='Sem Informação')
+    autor = models.CharField(max_length=100, blank=True, null=True, default='Anônimo')
 
     def __str__(self):
         return self.termo
