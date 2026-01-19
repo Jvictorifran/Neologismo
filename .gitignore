@@ -1,7 +1,7 @@
 # --- Python / Django ---
 backend/venv/
 backend/__pycache__/
-backend/*.sqlite3
+backend/*.sqlite3  (
 *.pyc
 
 # --- Node / React ---
