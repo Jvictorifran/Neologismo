@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class Neologismo (models.Model):
     #sobre o neologismo
-    termo = models.CharField(help_text='Nome do Neologismo', max_length=50)
+    termo = models.CharField(help_text='Nome do Neologismo', max_length=50, unique=True)
     significado = models.TextField(help_text='O que significa esse neologismo')
     exemplo_de_uso = models.TextField(help_text='Exemplo de uso do neologismo no dia á dia')
 
