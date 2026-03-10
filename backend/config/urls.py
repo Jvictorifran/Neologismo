@@ -21,6 +21,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from neologismo.views import NeologismoViewSet
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 router = DefaultRouter()
 router.register(r'neologismos', NeologismoViewSet)
 
@@ -28,4 +30,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/login/', obtain_auth_token, name='api_token_auth'),
+
+    #rotas swagger
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'), # O mapa bruto em JSON
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'), # A interface visual interativa
 ]

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #apps instalados
     'neologismo',
     'usuario',
+    'drf_spectacular',
     # 'accounts',
 ]
 
@@ -128,3 +129,23 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'usuario.Usuario'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API do Projeto Neologismo',
+    'DESCRIPTION': 'Documentação oficial da API de Neologismos',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
