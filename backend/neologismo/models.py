@@ -19,17 +19,26 @@ class Neologismo (models.Model):
     autor = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.CASCADE) #link para tabela dos usuarios
 
     #area de curtidas
-    likes = models.IntegerField(
-        default=0, 
-        validators=[MinValueValidator(0)],
-        help_text="Número de curtidas do neologismo"
+    likes = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, 
+        related_name='neologismos_curtidos',
+        blank=True
     )
             
-    deslikes = models.IntegerField(
-        default=0, 
-        validators=[MinValueValidator(0)],
-        help_text="Número de deslikes do neologismo"
+    deslikes = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, 
+        related_name='neologismos_rejeitados',
+        blank=True
     )
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
+    
+    @property
+    def total_deslikes(self):
+        return self.deslikes.count()
+    
     def __str__(self):
         return self.termo
 
