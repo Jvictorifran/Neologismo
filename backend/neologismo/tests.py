@@ -47,6 +47,45 @@ class PermissoesTest(NeologismoBaseTest):
         )
 
 
+class CriarNeologismoTest(NeologismoBaseTest):
+    def test_cria_com_contextos_aninhados(self):
+        self.client.force_authenticate(self.autor)
+        payload = {
+            "titulo": "Cringe",
+            "pronuncia": "/crín.gi/",
+            "classe_gramatical": "Adjetivo",
+            "definicao": "Que provoca vergonha alheia.",
+            "contexto_uso": "Foi cringe.",
+            "tags": ["Anglicismo"],
+            "contextos": [
+                {"citacao": "Que cringe!", "fonte": "@alguem", "link": ""},
+                {"citacao": "Muito cringe isso.", "fonte": "", "link": ""},
+            ],
+        }
+        resp = self.client.post("/api/neologismos/", payload, format="json")
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        # status é definido pelo servidor, não pelo cliente
+        self.assertEqual(resp.data["status"], "pendente")
+        # autor vem do usuário autenticado
+        self.assertEqual(resp.data["autor"], self.autor.id)
+        self.assertEqual(len(resp.data["contextos"]), 2)
+
+    def test_cliente_nao_define_status(self):
+        self.client.force_authenticate(self.autor)
+        payload = {
+            "titulo": "Hack",
+            "pronuncia": "/hak/",
+            "classe_gramatical": "Substantivo",
+            "definicao": "Atalho.",
+            "contexto_uso": "Um hack.",
+            "tags": [],
+            "status": "aprovado",
+        }
+        resp = self.client.post("/api/neologismos/", payload, format="json")
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(resp.data["status"], "pendente")
+
+
 class LikeDeslikeTest(NeologismoBaseTest):
     def test_like_adiciona_e_remove(self):
         self.client.force_authenticate(self.outro)

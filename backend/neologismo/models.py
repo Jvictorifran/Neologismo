@@ -73,3 +73,29 @@ class Neologismo (models.Model):
     def __str__(self):
         return self.titulo
 
+
+class Contexto(models.Model):
+    """Citação estruturada de uso de um neologismo (vários por verbete).
+
+    O site original lista múltiplas citações com a fonte e link de origem.
+    """
+    neologismo = models.ForeignKey(
+        Neologismo,
+        on_delete=models.CASCADE,
+        related_name='contextos'
+    )
+    citacao = models.TextField(help_text='Frase/trecho onde o neologismo aparece')
+    fonte = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text='Quem disse ou onde foi publicado. Ex: "@usuario no X"'
+    )
+    link = models.URLField(blank=True, help_text='Link para a fonte original')
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['data_criacao']
+
+    def __str__(self):
+        return f'Contexto de {self.neologismo.titulo}'
+
