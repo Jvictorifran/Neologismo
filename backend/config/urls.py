@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 
 from neologismo.views import NeologismoViewSet
+from usuario.views import RegistroView
 
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
@@ -30,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/login/', obtain_auth_token, name='api_token_auth'),
+    path('api/cadastro/', RegistroView.as_view(), name='api_cadastro'),
 
     #rotas swagger
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'), # O mapa bruto em JSON

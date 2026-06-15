@@ -1,12 +1,19 @@
-import type { Neologism } from "@/types";
-import { Heart, MessageCircle } from "lucide-react";
+import Link from "next/link";
+import type { Neologismo } from "@/types";
+import { Heart, ThumbsDown } from "lucide-react";
 
 interface NeologismCardProps {
-  neologism: Neologism;
+  neologismo: Neologismo;
+  onLike: (id: number) => void;
+  onDeslike: (id: number) => void;
 }
 
-export default function NeologismCard({ neologism }: NeologismCardProps) {
-  const formattedDate = new Date(neologism.createdAt).toLocaleDateString("pt-BR", {
+export default function NeologismCard({
+  neologismo,
+  onLike,
+  onDeslike,
+}: NeologismCardProps) {
+  const formattedDate = new Date(neologismo.data_criacao).toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -17,32 +24,62 @@ export default function NeologismCard({ neologism }: NeologismCardProps) {
       <div className="p-5">
         <div className="flex items-center justify-between mb-4">
           <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
-            {neologism.grammaticalClass}
+            {neologismo.classe_gramatical}
           </span>
           <time className="text-xs text-gray-400 font-medium">{formattedDate}</time>
         </div>
 
-        <h2 className="font-sans text-2xl font-bold text-gray-900 mb-1">
-          {neologism.word}
-        </h2>
+        <Link href={`/neologismo/${neologismo.id}`}>
+          <h2 className="font-sans text-2xl font-bold text-gray-900 mb-1 hover:text-purple-900 transition-colors">
+            {neologismo.titulo}
+          </h2>
+        </Link>
 
         <p className="text-sm text-purple-400 font-medium mb-3 tracking-wide italic">
-          {neologism.phonetic}
+          {neologismo.pronuncia}
         </p>
 
-        <p className="text-sm text-gray-600 leading-relaxed mb-4">
-          {neologism.definition}
+        <p className="text-sm text-gray-600 leading-relaxed mb-3">
+          {neologismo.definicao}
         </p>
 
-        <div className="flex items-center gap-4 pt-3 border-t border-gray-100">
-          <button className="flex items-center gap-1.5 text-gray-400 hover:text-red-400 transition-colors group">
-            <Heart className="w-4 h-4 group-hover:fill-red-400" />
-            <span className="text-xs font-medium">{neologism.likes}</span>
-          </button>
-          <button className="flex items-center gap-1.5 text-gray-400 hover:text-purple-500 transition-colors">
-            <MessageCircle className="w-4 h-4" />
-            <span className="text-xs font-medium">{neologism.comments}</span>
-          </button>
+        <div className="bg-gray-50 rounded-xl p-3 mb-4">
+          <p className="text-xs text-gray-500 italic leading-relaxed">
+            &ldquo;{neologismo.contexto_uso}&rdquo;
+          </p>
+          <p className="text-[10px] text-gray-400 font-medium mt-1">
+            — {neologismo.autor_nome}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+          <div className="flex flex-wrap gap-1.5">
+            {neologismo.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[10px] font-semibold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => onLike(neologismo.id)}
+              className="flex items-center gap-1.5 text-gray-400 hover:text-red-400 transition-colors group"
+            >
+              <Heart className="w-4 h-4 group-hover:fill-red-400" />
+              <span className="text-xs font-medium">{neologismo.total_likes}</span>
+            </button>
+            <button
+              onClick={() => onDeslike(neologismo.id)}
+              className="flex items-center gap-1.5 text-gray-400 hover:text-purple-500 transition-colors"
+            >
+              <ThumbsDown className="w-4 h-4" />
+              <span className="text-xs font-medium">{neologismo.total_deslikes}</span>
+            </button>
+          </div>
         </div>
       </div>
     </article>
