@@ -32,7 +32,7 @@ class Command(BaseCommand):
 
         # 2. Configurações para os Neologismos
         classes = ['Substantivo', 'Verbo', 'Adjetivo', 'Interjeição', 'Expressão']
-        status_opcoes = ['PENDENTE', 'APROVADO', 'REJEITADO']
+        status_opcoes = ['pendente', 'aprovado', 'rejeitado']
 
         self.stdout.write(f"Gerando 50 neologismos...")
 

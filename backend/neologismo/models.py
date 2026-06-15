@@ -71,5 +71,5 @@ class Neologismo (models.Model):
         return self.deslikes.count()
     
     def __str__(self):
-        return self.termo
+        return self.titulo
 

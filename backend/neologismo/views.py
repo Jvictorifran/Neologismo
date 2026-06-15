@@ -58,6 +58,6 @@ class NeologismoViewSet(viewsets.ModelViewSet):
             
         return Response({
             'status': status_msg,
-            'total_likes': neologismo.total_likes(),
-            'total_deslikes': neologismo.total_deslikes()
+            'likes': neologismo.total_likes,
+            'deslikes': neologismo.total_deslikes
         })
