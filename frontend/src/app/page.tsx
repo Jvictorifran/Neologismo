@@ -3,40 +3,31 @@
 import { useState } from "react";
 import Header from "@/components/Header";
 import NeologismCard from "@/components/NeologismCard";
-import { mockNeologisms } from "@/data/mockNeologisms";
-import { Search } from "lucide-react";
+import { useNeologismos } from "@/hooks/useNeologismos";
+import { Search, Loader2 } from "lucide-react";
 
 const filterCategories = [
   { id: "all", label: "Todos" },
-  { id: "internet", label: "Internetês" },
-  { id: "anglicism", label: "Anglicismo" },
-  { id: "behavior", label: "Comportamento" },
-  { id: "verbalization", label: "Verbalização" },
-  { id: "slang", label: "Gíria" },
+  { id: "Internetês", label: "Internetês" },
+  { id: "Anglicismo", label: "Anglicismo" },
+  { id: "Comportamento", label: "Comportamento" },
+  { id: "Verbalização", label: "Verbalização" },
+  { id: "Gíria", label: "Gíria" },
 ];
 
 export default function Home() {
+  const { data, loading, error, refetch, onLike, onDeslike } = useNeologismos();
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredNeologisms = mockNeologisms.filter((n) => {
+  const filteredNeologismos = data.filter((n) => {
     const matchesCategory =
-      activeCategory === "all" ||
-      n.tags.some((t) => {
-        const categoryMap: Record<string, string> = {
-          internet: "Internetês",
-          anglicism: "Anglicismo",
-          behavior: "Comportamento",
-          verbalization: "Verbalização",
-          slang: "Gíria",
-        };
-        return t.label === categoryMap[activeCategory];
-      });
+      activeCategory === "all" || n.tags.includes(activeCategory);
 
     const matchesSearch =
       searchQuery === "" ||
-      n.word.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      n.definition.toLowerCase().includes(searchQuery.toLowerCase());
+      n.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      n.definicao.toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchesCategory && matchesSearch;
   });
@@ -102,18 +93,45 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {filteredNeologisms.map((neologism) => (
-            <NeologismCard key={neologism.id} neologism={neologism} />
-          ))}
-        </div>
-
-        {filteredNeologisms.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-gray-500 text-sm">
-              Nenhum neologismo encontrado para os filtros selecionados.
-            </p>
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 text-purple-900 animate-spin" />
           </div>
+        )}
+
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-red-500 text-sm mb-4">{error}</p>
+            <button
+              onClick={refetch}
+              className="px-4 py-2 text-sm font-medium text-white bg-purple-900 rounded-full hover:bg-purple-800"
+            >
+              Tentar novamente
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {filteredNeologismos.map((neologismo) => (
+                <NeologismCard
+                  key={neologismo.id}
+                  neologismo={neologismo}
+                  onLike={onLike}
+                  onDeslike={onDeslike}
+                />
+              ))}
+            </div>
+
+            {filteredNeologismos.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-gray-500 text-sm">
+                  Nenhum neologismo encontrado para os filtros selecionados.
+                </p>
+              </div>
+            )}
+          </>
         )}
       </section>
     </>

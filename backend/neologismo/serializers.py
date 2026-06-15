@@ -21,11 +21,15 @@ class NeologismoSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'titulo', 'pronuncia', 'classe_gramatical',
             'definicao', 'contexto_uso', 'contextos', 'tags', 'status',
+            'motivo_rejeicao', 'reativado_em',
             'data_criacao', 'autor', 'autor_nome',
             'likes', 'deslikes', 'total_likes', 'total_deslikes'
         ]
         # Definidos pelo servidor / por ações dedicadas, nunca pelo cliente.
-        read_only_fields = ['status', 'autor', 'likes', 'deslikes']
+        read_only_fields = [
+            'status', 'autor', 'likes', 'deslikes',
+            'motivo_rejeicao', 'reativado_em',
+        ]
 
     def get_total_likes(self, obj):
         return obj.likes.count()

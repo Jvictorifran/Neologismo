@@ -115,3 +115,64 @@ class LikeDeslikeTest(NeologismoBaseTest):
         resp = self.client.post(f"/api/neologismos/{self.neo.id}/dar_deslike/")
         self.assertIn("likes", resp.data)
         self.assertIn("deslikes", resp.data)
+
+
+class ModeracaoTest(NeologismoBaseTest):
+    def setUp(self):
+        super().setUp()
+        self.admin = Usuario.objects.create_user(
+            username="admin", password="senha123", is_staff=True
+        )
+        self.neo.status = "pendente"
+        self.neo.save()
+
+    def test_usuario_comum_nao_modera(self):
+        self.client.force_authenticate(self.outro)
+        resp = self.client.post(f"/api/neologismos/{self.neo.id}/aprovar/")
+        self.assertEqual(resp.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_admin_aprova(self):
+        self.client.force_authenticate(self.admin)
+        resp = self.client.post(f"/api/neologismos/{self.neo.id}/aprovar/")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.neo.refresh_from_db()
+        self.assertEqual(self.neo.status, "aprovado")
+
+    def test_admin_rejeita_com_motivo(self):
+        self.client.force_authenticate(self.admin)
+        resp = self.client.post(
+            f"/api/neologismos/{self.neo.id}/rejeitar/",
+            {"motivo_rejeicao": "Duplicado"},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.neo.refresh_from_db()
+        self.assertEqual(self.neo.status, "rejeitado")
+        self.assertEqual(self.neo.motivo_rejeicao, "Duplicado")
+
+    def test_admin_reativa(self):
+        self.neo.status = "rejeitado"
+        self.neo.save()
+        self.client.force_authenticate(self.admin)
+        resp = self.client.post(f"/api/neologismos/{self.neo.id}/reativar/")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.neo.refresh_from_db()
+        self.assertEqual(self.neo.status, "aprovado")
+        self.assertIsNotNone(self.neo.reativado_em)
+
+    def test_filtro_por_status(self):
+        resp = self.client.get("/api/neologismos/?status=pendente")
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertTrue(all(n["status"] == "pendente" for n in resp.data))
+
+
+class CadastroTest(APITestCase):
+    def test_cadastro_cria_usuario_e_retorna_token(self):
+        resp = self.client.post(
+            "/api/cadastro/",
+            {"username": "novo", "email": "n@x.com", "password": "senha123"},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertIn("token", resp.data)
+        self.assertTrue(Usuario.objects.filter(username="novo").exists())
