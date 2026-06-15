@@ -13,7 +13,8 @@ export function useNeologismos() {
     try {
       setLoading(true);
       setError(null);
-      const neologismos = await fetchNeologismos();
+      // Home pública mostra apenas neologismos aprovados.
+      const neologismos = await fetchNeologismos("aprovado");
       setData(neologismos);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro desconhecido");

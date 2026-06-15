@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Header from "@/components/Header";
 import NeologismCard from "@/components/NeologismCard";
 import { useNeologismos } from "@/hooks/useNeologismos";
@@ -53,17 +54,23 @@ export default function Home() {
           </p>
 
           <div className="flex items-center justify-center gap-4">
-            <button className="px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors">
+            <Link
+              href="/enviar"
+              className="px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors"
+            >
               Enviar uma palavra
-            </button>
-            <button className="px-6 py-2.5 text-sm font-semibold text-purple-900 border border-purple-900 rounded-full hover:bg-purple-50 transition-colors">
+            </Link>
+            <a
+              href="#explorar"
+              className="px-6 py-2.5 text-sm font-semibold text-purple-900 border border-purple-900 rounded-full hover:bg-purple-50 transition-colors"
+            >
               Como funciona
-            </button>
+            </a>
           </div>
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section id="explorar" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="max-w-2xl mx-auto mb-8">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />

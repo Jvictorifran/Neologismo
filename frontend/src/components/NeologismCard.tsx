@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Neologismo } from "@/types";
 import { Heart, ThumbsDown } from "lucide-react";
 
@@ -28,9 +29,11 @@ export default function NeologismCard({
           <time className="text-xs text-gray-400 font-medium">{formattedDate}</time>
         </div>
 
-        <h2 className="font-sans text-2xl font-bold text-gray-900 mb-1">
-          {neologismo.titulo}
-        </h2>
+        <Link href={`/neologismo/${neologismo.id}`}>
+          <h2 className="font-sans text-2xl font-bold text-gray-900 mb-1 hover:text-purple-900 transition-colors">
+            {neologismo.titulo}
+          </h2>
+        </Link>
 
         <p className="text-sm text-purple-400 font-medium mb-3 tracking-wide italic">
           {neologismo.pronuncia}
