@@ -4,6 +4,9 @@
   --color-background: #ffffff;
   --color-foreground: #1a1a2e;
   --font-sans: var(--font-inter);
+  --color-purple-light: #CC99CC;
+  --color-purple-primary: #996699;
+  --color-purple-dark: #660066;
 }
 
 body {

@@ -17,7 +17,6 @@ class NeologismoBaseTest(APITestCase):
         )
         self.neo = Neologismo.objects.create(
             titulo="Biscoitar",
-            pronuncia="/bis.coi.tar/",
             classe_gramatical="Verbo",
             definicao="Buscar validação pública nas redes.",
             contexto_uso="Ela passou a tarde biscoitando.",
@@ -52,7 +51,6 @@ class CriarNeologismoTest(NeologismoBaseTest):
         self.client.force_authenticate(self.autor)
         payload = {
             "titulo": "Cringe",
-            "pronuncia": "/crín.gi/",
             "classe_gramatical": "Adjetivo",
             "definicao": "Que provoca vergonha alheia.",
             "contexto_uso": "Foi cringe.",
@@ -74,7 +72,6 @@ class CriarNeologismoTest(NeologismoBaseTest):
         self.client.force_authenticate(self.autor)
         payload = {
             "titulo": "Hack",
-            "pronuncia": "/hak/",
             "classe_gramatical": "Substantivo",
             "definicao": "Atalho.",
             "contexto_uso": "Um hack.",

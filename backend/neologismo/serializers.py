@@ -19,7 +19,7 @@ class NeologismoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Neologismo
         fields = [
-            'id', 'titulo', 'pronuncia', 'classe_gramatical',
+            'id', 'titulo', 'classe_gramatical',
             'definicao', 'contexto_uso', 'contextos', 'tags', 'status',
             'motivo_rejeicao', 'reativado_em',
             'data_criacao', 'autor', 'autor_nome',

@@ -17,10 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework.authtoken.views import obtain_auth_token
 
 from neologismo.views import NeologismoViewSet
-from usuario.views import RegistroView
+from usuario.views import RegistroView, LoginView, MeView
 
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
@@ -30,10 +29,11 @@ router.register(r'neologismos', NeologismoViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/login/', obtain_auth_token, name='api_token_auth'),
+    path('api/login/', LoginView.as_view(), name='api_login'),
     path('api/cadastro/', RegistroView.as_view(), name='api_cadastro'),
+    path('api/me/', MeView.as_view(), name='api_me'),
 
     #rotas swagger
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'), # O mapa bruto em JSON
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'), # A interface visual interativa
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]

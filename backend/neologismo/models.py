@@ -14,7 +14,6 @@ class Neologismo (models.Model):
     contexto_uso = models.TextField(help_text='Frase de exemplo demonstrando o uso') 
     
     #novos campos
-    pronuncia = models.CharField(max_length=100, help_text='Formato fonético. Ex: /bis.coi.tar/')
     classe_gramatical = models.CharField(max_length=50, help_text='Substantivo, Verbo, Adjetivo, etc.')
     
     # tags (array[str], opcional) - Usando ArrayField do Postgres

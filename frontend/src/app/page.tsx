@@ -37,32 +37,32 @@ export default function Home() {
     <>
       <Header />
 
-      <section className="bg-gradient-to-br from-white to-purple-50 py-16 px-4">
+      <section className="bg-gradient-to-br from-white to-purple-light/20 py-6 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <span className="inline-block text-xs font-bold uppercase tracking-wider text-purple-800 border border-purple-200 rounded-full px-4 py-1.5 mb-6">
+          <span className="inline-block text-xs font-bold uppercase tracking-wider text-purple-dark border border-purple-light rounded-full px-4 py-1.5 mb-3">
             Dicionário Colaborativo
           </span>
 
-          <h1 className="font-sans text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+          <h1 className="font-sans text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight mb-2">
             O brasileiro deve ser estudado.
             <br />
             As palavras que ele cria também.
           </h1>
 
-          <p className="text-base text-gray-500 mb-8 max-w-xl mx-auto">
+          <p className="text-sm text-gray-500 mb-4 max-w-xl mx-auto">
             Registre, explore e discuta os neologismos que moldam o português do nosso tempo.
           </p>
 
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-3">
             <Link
               href="/enviar"
-              className="px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors"
+              className="px-5 py-2 text-sm font-semibold text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors"
             >
               Enviar uma palavra
             </Link>
             <a
               href="#explorar"
-              className="px-6 py-2.5 text-sm font-semibold text-purple-900 border border-purple-900 rounded-full hover:bg-purple-50 transition-colors"
+              className="px-5 py-2 text-sm font-semibold text-purple-dark border border-purple-dark rounded-full hover:bg-purple-light/20 transition-colors"
             >
               Como funciona
             </a>
@@ -79,7 +79,7 @@ export default function Home() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar neologismos, ex: «biscoitar», «cringe»..."
-              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-full text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-full text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
             />
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function Home() {
               onClick={() => setActiveCategory(cat.id)}
               className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                 activeCategory === cat.id
-                  ? "bg-purple-100 text-purple-900"
+                  ? "bg-purple-light text-purple-dark"
                   : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
               }`}
             >
@@ -102,7 +102,7 @@ export default function Home() {
 
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-purple-900 animate-spin" />
+            <Loader2 className="w-8 h-8 text-purple-dark animate-spin" />
           </div>
         )}
 
@@ -111,7 +111,7 @@ export default function Home() {
             <p className="text-red-500 text-sm mb-4">{error}</p>
             <button
               onClick={refetch}
-              className="px-4 py-2 text-sm font-medium text-white bg-purple-900 rounded-full hover:bg-purple-800"
+              className="px-4 py-2 text-sm font-medium text-white bg-purple-dark rounded-full hover:bg-purple-dark"
             >
               Tentar novamente
             </button>

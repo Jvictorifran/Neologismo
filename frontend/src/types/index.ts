@@ -14,7 +14,6 @@ export interface ContextoCreate {
 export interface Neologismo {
   id: number;
   titulo: string;
-  pronuncia: string;
   classe_gramatical: string;
   definicao: string;
   contexto_uso: string;
@@ -32,7 +31,6 @@ export interface Neologismo {
 
 export interface NeologismoCreate {
   titulo: string;
-  pronuncia: string;
   classe_gramatical: string;
   definicao: string;
   contexto_uso: string;
@@ -55,6 +53,9 @@ export interface LoginPayload {
 
 export interface LoginResponse {
   token: string;
+  user_id: number;
+  username: string;
+  is_admin: boolean;
 }
 
 export interface RegistroPayload {
@@ -67,4 +68,5 @@ export interface RegistroResponse {
   token: string;
   user_id: number;
   username: string;
+  is_admin: boolean;
 }

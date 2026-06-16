@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { getToken, getUsername, logout as apiLogout } from "@/lib/api";
+import { getToken, getUsername, getIsAdmin, logout as apiLogout } from "@/lib/api";
 
 export function useAuth() {
   const [username, setUsername] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [ready, setReady] = useState(false);
 
   const sync = useCallback(() => {
-    setUsername(getToken() ? getUsername() : null);
+    const token = getToken();
+    setUsername(token ? getUsername() : null);
+    setIsAdmin(token ? getIsAdmin() : false);
     setReady(true);
   }, []);
 
@@ -26,5 +29,5 @@ export function useAuth() {
     apiLogout();
   }, []);
 
-  return { username, isAuthenticated: !!username, ready, logout };
+  return { username, isAuthenticated: !!username, isAdmin, ready, logout };
 }

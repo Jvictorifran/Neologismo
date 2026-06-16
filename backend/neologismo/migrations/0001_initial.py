@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('titulo', models.CharField(help_text='Nome do neologismo', max_length=50)),
                 ('definicao', models.TextField(help_text='Descrição completa do significado')),
                 ('contexto_uso', models.TextField(help_text='Frase de exemplo demonstrando o uso')),
-                ('pronuncia', models.CharField(help_text='Formato fonético. Ex: /bis.coi.tar/', max_length=100)),
+
                 ('classe_gramatical', models.CharField(help_text='Substantivo, Verbo, Adjetivo, etc.', max_length=50)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=50), blank=True, default=list, help_text='Lista de strings. Ex: ["Internetês", "Anglicismo"]')),
                 ('status', models.CharField(choices=[('pendente', 'Pendente'), ('aprovado', 'Aprovado'), ('rejeitado', 'Rejeitado')], default='pendente', max_length=10)),

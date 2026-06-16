@@ -5,18 +5,18 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { LogOut } from "lucide-react";
 
-const navLinks = [
-  { href: "/", label: "Explorar" },
-  { href: "/enviar", label: "Enviar Neologismo" },
-  { href: "/admin-painel", label: "Admin" },
-];
-
 export default function Header() {
   const pathname = usePathname();
-  const { username, isAuthenticated, ready, logout } = useAuth();
+  const { username, isAuthenticated, isAdmin, ready, logout } = useAuth();
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const visibleLinks = [
+    { href: "/", label: "Explorar" },
+    { href: "/enviar", label: "Enviar Neologismo" },
+    ...(isAdmin ? [{ href: "/admin-painel", label: "Admin" }] : []),
+  ];
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -27,19 +27,19 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {visibleLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={`relative text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? "text-purple-900"
-                    : "text-gray-500 hover:text-purple-900"
+                    ? "text-purple-dark"
+                    : "text-gray-500 hover:text-purple-dark"
                 }`}
               >
                 {link.label}
                 {isActive(link.href) && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-900 rounded-full" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-dark rounded-full" />
                 )}
               </Link>
             ))}
@@ -69,7 +69,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/cadastro"
-                  className="hidden sm:inline-flex items-center px-4 py-1.5 text-sm font-medium text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors"
+                  className="hidden sm:inline-flex items-center px-4 py-1.5 text-sm font-medium text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors"
                 >
                   Cadastrar
                 </Link>
