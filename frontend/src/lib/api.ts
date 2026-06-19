@@ -109,7 +109,7 @@ export async function login(payload: LoginPayload): Promise<LoginResponse> {
   if (!res.ok) await parseError(res, "Usuário ou senha inválidos");
 
   const data = await res.json();
-  saveSession(data.token, payload.username);
+  saveSession(data.token, data.username, data.is_admin);
   return data;
 }
 
@@ -125,7 +125,7 @@ export async function register(
   if (!res.ok) await parseError(res, "Falha ao cadastrar");
 
   const data = await res.json();
-  saveSession(data.token, data.username);
+  saveSession(data.token, data.username, data.is_admin);
   return data;
 }
 
@@ -157,10 +157,13 @@ export async function reativarNeologismo(id: number): Promise<void> {
   if (!res.ok) await parseError(res, "Falha ao reativar");
 }
 
-function saveSession(token: string, username?: string): void {
+function saveSession(token: string, username?: string, isAdmin?: boolean): void {
   if (typeof window === "undefined") return;
   localStorage.setItem("auth_token", token);
   if (username) localStorage.setItem("auth_username", username);
+  if (isAdmin !== undefined) {
+    localStorage.setItem("auth_is_admin", String(isAdmin));
+  }
   window.dispatchEvent(new Event("auth-change"));
 }
 
@@ -168,6 +171,7 @@ export function logout(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem("auth_token");
   localStorage.removeItem("auth_username");
+  localStorage.removeItem("auth_is_admin");
   window.dispatchEvent(new Event("auth-change"));
 }
 
@@ -183,4 +187,11 @@ export function getUsername(): string | null {
     return localStorage.getItem("auth_username");
   }
   return null;
+}
+
+export function getIsAdmin(): boolean {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("auth_is_admin") === "true";
+  }
+  return false;
 }

@@ -8,13 +8,12 @@ import { createNeologismo } from "@/lib/api";
 import { Loader2, CheckCircle2 } from "lucide-react";
 
 const inputClass =
-  "w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent";
+  "w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent";
 
 export default function EnviarPage() {
   const { isAuthenticated, ready } = useAuth();
 
   const [titulo, setTitulo] = useState("");
-  const [pronuncia, setPronuncia] = useState("");
   const [classe, setClasse] = useState("");
   const [definicao, setDefinicao] = useState("");
   const [contextoUso, setContextoUso] = useState("");
@@ -49,7 +48,6 @@ export default function EnviarPage() {
     try {
       await createNeologismo({
         titulo: titulo.trim(),
-        pronuncia: pronuncia.trim(),
         classe_gramatical: classe.trim(),
         definicao: definicao.trim(),
         contexto_uso: contextoUso.trim(),
@@ -69,7 +67,7 @@ export default function EnviarPage() {
       <>
         <Header />
         <div className="flex items-center justify-center py-32">
-          <Loader2 className="w-8 h-8 text-purple-900 animate-spin" />
+          <Loader2 className="w-8 h-8 text-purple-dark animate-spin" />
         </div>
       </>
     );
@@ -88,7 +86,7 @@ export default function EnviarPage() {
           </p>
           <Link
             href="/login"
-            className="inline-flex px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors"
+            className="inline-flex px-6 py-2.5 text-sm font-semibold text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors"
           >
             Entrar
           </Link>
@@ -102,7 +100,7 @@ export default function EnviarPage() {
       <>
         <Header />
         <section className="max-w-md mx-auto px-4 py-24 text-center">
-          <CheckCircle2 className="w-12 h-12 text-purple-900 mx-auto mb-4" />
+          <CheckCircle2 className="w-12 h-12 text-purple-dark mx-auto mb-4" />
           <h1 className="text-2xl font-extrabold text-gray-900 mb-2">
             Neologismo enviado!
           </h1>
@@ -111,7 +109,7 @@ export default function EnviarPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors"
+            className="inline-flex px-6 py-2.5 text-sm font-semibold text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors"
           >
             Voltar à Home
           </Link>
@@ -124,7 +122,7 @@ export default function EnviarPage() {
     <>
       <Header />
       <section className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
-        <span className="inline-block text-xs font-bold uppercase tracking-wider text-purple-800 border border-purple-200 rounded-full px-4 py-1.5 mb-4">
+        <span className="inline-block text-xs font-bold uppercase tracking-wider text-purple-dark border border-purple-light rounded-full px-4 py-1.5 mb-4">
           Enviar Neologismo
         </span>
         <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
@@ -141,19 +139,11 @@ export default function EnviarPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Título *
-              </label>
-              <input value={titulo} onChange={(e) => setTitulo(e.target.value)} className={inputClass} placeholder="Ex: Biscoitar" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Pronúncia
-              </label>
-              <input value={pronuncia} onChange={(e) => setPronuncia(e.target.value)} className={inputClass} placeholder="/bis.coi.tar/" />
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Título *
+            </label>
+            <input value={titulo} onChange={(e) => setTitulo(e.target.value)} className={inputClass} placeholder="Ex: Biscoitar" />
           </div>
 
           <div>
@@ -207,7 +197,7 @@ export default function EnviarPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors disabled:opacity-60"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-2.5 text-sm font-semibold text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors disabled:opacity-60"
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             Enviar neologismo

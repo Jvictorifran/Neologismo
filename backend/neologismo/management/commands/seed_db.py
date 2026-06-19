@@ -42,7 +42,7 @@ class Command(BaseCommand):
             # Criamos o objeto (Campos normais e ForeignKey)
             neo = Neologismo.objects.create(
                 titulo=f"{titulo}_{i}", # Adicionado ID para evitar duplicatas de palavras curtas do Faker
-                pronuncia=f"{titulo.lower()}-zão",
+
                 classe_gramatical=random.choice(classes),
                 definicao=fake.sentence(nb_words=12),
                 contexto_uso=fake.paragraph(nb_sentences=2),

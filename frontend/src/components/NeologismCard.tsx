@@ -23,21 +23,17 @@ export default function NeologismCard({
     <article className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-shadow hover:shadow-md">
       <div className="p-5">
         <div className="flex items-center justify-between mb-4">
-          <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
+          <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider text-purple-dark bg-purple-light px-3 py-1 rounded-full">
             {neologismo.classe_gramatical}
           </span>
           <time className="text-xs text-gray-400 font-medium">{formattedDate}</time>
         </div>
 
         <Link href={`/neologismo/${neologismo.id}`}>
-          <h2 className="font-sans text-2xl font-bold text-gray-900 mb-1 hover:text-purple-900 transition-colors">
-            {neologismo.titulo}
+          <h2 className="font-sans text-2xl font-bold text-gray-900 mb-1 hover:text-purple-dark transition-colors">
+            {neologismo.titulo.toLocaleLowerCase()}
           </h2>
         </Link>
-
-        <p className="text-sm text-purple-400 font-medium mb-3 tracking-wide italic">
-          {neologismo.pronuncia}
-        </p>
 
         <p className="text-sm text-gray-600 leading-relaxed mb-3">
           {neologismo.definicao}
@@ -74,7 +70,7 @@ export default function NeologismCard({
             </button>
             <button
               onClick={() => onDeslike(neologismo.id)}
-              className="flex items-center gap-1.5 text-gray-400 hover:text-purple-500 transition-colors"
+              className="flex items-center gap-1.5 text-gray-400 hover:text-purple-primary transition-colors"
             >
               <ThumbsDown className="w-4 h-4" />
               <span className="text-xs font-medium">{neologismo.total_deslikes}</span>

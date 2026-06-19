@@ -37,7 +37,7 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <section className="bg-gradient-to-br from-white to-purple-50 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16">
+      <section className="bg-gradient-to-br from-white to-purple-light/20 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
             <h1 className="text-2xl font-extrabold text-gray-900 mb-1">Entrar</h1>
@@ -60,7 +60,7 @@ export default function LoginPage() {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
                   autoComplete="username"
                 />
               </div>
@@ -73,7 +73,7 @@ export default function LoginPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
                   autoComplete="current-password"
                 />
               </div>
@@ -81,7 +81,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors disabled:opacity-60"
+                className="w-full flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors disabled:opacity-60"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 Entrar
@@ -90,7 +90,7 @@ export default function LoginPage() {
 
             <p className="text-sm text-gray-500 text-center mt-6">
               Não tem conta?{" "}
-              <Link href="/cadastro" className="font-semibold text-purple-900 hover:underline">
+              <Link href="/cadastro" className="font-semibold text-purple-dark hover:underline">
                 Cadastre-se
               </Link>
             </p>

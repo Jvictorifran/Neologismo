@@ -47,7 +47,7 @@ export default function CadastroPage() {
   return (
     <>
       <Header />
-      <section className="bg-gradient-to-br from-white to-purple-50 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16">
+      <section className="bg-gradient-to-br from-white to-purple-light/20 min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md">
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
             <h1 className="text-2xl font-extrabold text-gray-900 mb-1">Criar conta</h1>
@@ -70,7 +70,7 @@ export default function CadastroPage() {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
                   autoComplete="username"
                 />
               </div>
@@ -83,7 +83,7 @@ export default function CadastroPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
                   autoComplete="email"
                 />
               </div>
@@ -96,7 +96,7 @@ export default function CadastroPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
                   autoComplete="new-password"
                 />
               </div>
@@ -109,7 +109,7 @@ export default function CadastroPage() {
                   type="password"
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-primary focus:border-transparent"
                   autoComplete="new-password"
                 />
               </div>
@@ -117,7 +117,7 @@ export default function CadastroPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-purple-900 rounded-full hover:bg-purple-800 transition-colors disabled:opacity-60"
+                className="w-full flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-purple-dark rounded-full hover:bg-purple-dark transition-colors disabled:opacity-60"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 Cadastrar
@@ -126,7 +126,7 @@ export default function CadastroPage() {
 
             <p className="text-sm text-gray-500 text-center mt-6">
               Já tem conta?{" "}
-              <Link href="/login" className="font-semibold text-purple-900 hover:underline">
+              <Link href="/login" className="font-semibold text-purple-dark hover:underline">
                 Entrar
               </Link>
             </p>

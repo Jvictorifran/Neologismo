@@ -9,7 +9,8 @@ class RegistroSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Usuario
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'is_admin']
+        read_only_fields = ['is_admin']
 
     def create(self, validated_data):
         return Usuario.objects.create_user(
@@ -17,3 +18,9 @@ class RegistroSerializer(serializers.ModelSerializer):
             email=validated_data.get('email', ''),
             password=validated_data['password'],
         )
+
+
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['id', 'username', 'email', 'is_admin']
