@@ -15,6 +15,7 @@ export default function Header() {
   const visibleLinks = [
     { href: "/", label: "Explorar" },
     { href: "/enviar", label: "Enviar Neologismo" },
+    { href: "/sobre", label: "Sobre" },
     ...(isAdmin ? [{ href: "/admin-painel", label: "Admin" }] : []),
   ];
 
