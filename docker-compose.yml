@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: neologismo_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin_neologismo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-senha123}
+      POSTGRES_DB: ${POSTGRES_DB:-banco_neologismo}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # Exposto no host para inspeção (ex.: DBeaver). Remova se não precisar.
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin_neologismo} -d ${POSTGRES_DB:-banco_neologismo}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: neologismo_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG:-True}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-127.0.0.1,localhost,backend}
+      DATABASE_URL: postgres://${POSTGRES_USER:-admin_neologismo}:${POSTGRES_PASSWORD:-senha123}@db:5432/${POSTGRES_DB:-banco_neologismo}
+      # Usados pelo entrypoint.sh para aguardar o banco
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+    volumes:
+      # Hot-reload: reflete alterações do código local no container
+      - ./backend:/app
+    ports:
+      # Porta do host configurável (evita conflito com outros projetos)
+      - "${BACKEND_PORT:-8000}:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: neologismo_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
+    volumes:
+      # Hot-reload do Next, preservando node_modules e .next do container
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+
+volumes:
+  postgres_data:
